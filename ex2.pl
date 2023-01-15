@@ -10,7 +10,6 @@ member1(X, [X | _]).
 member1(X, [H | T]) :- member1(X, T).
 
 % way 2
-
 my_member(X, [X | _]).
 my_member(X, [H | T]) :- my_member(X, T).
 
@@ -92,5 +91,4 @@ subsequence(S, [_ | T]) :- subsequence(S , T).
 subsequence([H | S], [H | T]) :- subsequence(S, T).
 
 % power_set(P,S) - P is the power set of S (S has no repetitions)
-
 power_set([[], []]). %stepenneto mn-vo na [], [[]].
