@@ -22,9 +22,9 @@ append1([H | T], L2, [H | R]) :- append1(T, L2, R).
 
 replace1(X,Y, [], []).
 replace1(X, Y, [X | T], [Y|R]) :- replace1(X, Y, T, R).
-replace1(X, Y, [H | T], [H |R ]):-replace1(X, Y, T, R), X\=T.
+replace1(X, Y, [H | T], [H |R ]):-replace1(X, Y, T, R), X\=H.
 
-% If we do not have X\=T.
+% If we do not have X\=H.
 % replace(a, b, [a | ], ?) - goes to second clause
 % [b | ] -> replace(a, b, [], R) -> returns [] , so [b | []]
 % here we will stop, but we have one more row to go
@@ -92,3 +92,12 @@ subsequence([H | S], [H | T]) :- subsequence(S, T).
 
 % power_set(P,S) - P is the power set of S (S has no repetitions)
 power_set([[], []]). %stepenneto mn-vo na [], [[]].
+power_set(P, [A | S]) :-
+    power_set(B, S), % we follow the def so we gen the P(S) to be B
+    prepend_to_all(A, B, C), % then we prepend A to B
+    append(B, C, P). % and then we make union of B and C to produce P
+
+prepend_to_all(_, [], []).
+prepend_to_all(X, [L | LS], [[X | L] | RS]):- prepend_to_all(X, LS, RS).
+
+

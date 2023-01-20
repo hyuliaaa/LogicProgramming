@@ -35,8 +35,8 @@ list_length([], 0).
 list_length([_ | T], N) :- list_length(T, K), N#= K + 1.
 
 % element_at(X, L, N) :- whether X is in position N of list L
-element_at(X, [X | _], 0).
-element_at(X, [_ | T], N) :- N#=0, K#=N-1, element_at(X, T, K).
+element_at(X, [X |_ ], 0).
+element_at(X, [_ | T], N):- N #> 0, K #= N - 1, element_at(X, T, K). 
 
 index_in_list(X, [X | _], 0).
 index_in_list(X, [H | T], N) :-X#\=H,index_in_list(X, T, K), N#=K + 1.

@@ -148,9 +148,10 @@ gen_two_positive_rat_numbers([X,Y], [Z,U]) :-
 % (A, B) : A^2 + B^2 <=R2 [we check if a point is in a circle with center (0,0)]
 
 
-gen_in_square(R, A, B) :-  %-R<=A<=R, -R<=B<=R
+% ще искаме да генерираме А, Б, която е в квадрата   -R<=A<=R, -R<=B<=R
+gen_in_square(R, A, B) :-  %-R<=A<=R, -R<=B<=R [генерираме всички точки А, Б в квадрата]
     MR #= -R,
-    between(MR, R, A),
+    between(MR, R, A), 
     between(MR, R, B).
 
 gen_in_circle_00(R, A, B) :- % приемаме радиус R и генерираме A и В 
