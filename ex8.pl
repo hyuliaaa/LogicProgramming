@@ -72,8 +72,6 @@ is_path_valid([V, E], [U, W | P]) :-
 % path_imp([V,E], S, F, P) :- path_imp_track_visited([V,E], S, F, [S], P).
 
 
-
-
 % %  S = 2, F = 3 -> [2, 1, 3]
 
 % % Step 1: [2]
@@ -86,5 +84,41 @@ is_path_valid([V, E], [U, W | P]) :-
 % path_imp_track_visited([_,_], F, F, Visited, P):-
 %     reverse(Visited, P)
     
-% path_imp_track_visited([_,_], S, F, [T, Rest], P) :-
-    
+
+path_imp([_, E], S, F, P) :- path_imp_track_viseted(E, F, [S], P).
+
+path_imp_track_viseted(_, F, [F | Visited], P) :- reverse([F | Visited], P).
+path_imp_track_viseted(E, F, [T | Rest], P) :-
+    T \= F,
+    edge([T, U], E),
+    not(member(U, Rest)),
+    path_imp_track_viseted(E, F, [U, T | Rest], P).
+
+path([V, E], P) :-
+    member(S, V),
+    member(F, V),
+    S \= F,
+    path_imp([V, E], S, F, P). 
+
+is_connected([V, E]) :-
+    not((
+        member(S, V),
+        member(F, V),
+        S \= F,
+        not(path_imp([V, E], S, F, _))
+    )).
+
+is_acyclic([V, E]) :-
+    not((
+        member(S, V),
+        member(F, V),
+        S \= F,
+        path_imp([V, E], S, F, P1),
+        path_imp([V, E], S, F, P2),
+        P1 \= P2
+    )).
+
+is_tree(G) :-
+    is_connected(G),
+    is_acyclic(G).
+
