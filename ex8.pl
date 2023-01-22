@@ -85,14 +85,14 @@ is_path_valid([V, E], [U, W | P]) :-
 %     reverse(Visited, P)
     
 
-path_imp([_, E], S, F, P) :- path_imp_track_viseted(E, F, [S], P).
+path_imp([_, E], S, F, P) :- path_imp_track_visited(E, F, [S], P).
 
-path_imp_track_viseted(_, F, [F | Visited], P) :- reverse([F | Visited], P).
-path_imp_track_viseted(E, F, [T | Rest], P) :-
+path_imp_track_visited(_, F, [F | Visited], P) :- reverse([F | Visited], P).
+path_imp_track_visited(E, F, [T | Rest], P) :-
     T \= F,
     edge([T, U], E),
     not(member(U, Rest)),
-    path_imp_track_viseted(E, F, [U, T | Rest], P).
+    path_imp_track_visited(E, F, [U, T | Rest], P).
 
 path([V, E], P) :-
     member(S, V),
