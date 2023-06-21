@@ -156,11 +156,3 @@ variations_with_repetitions([H|T] , K, L) :-
     variations_with_repetitions(T, N, L).
 
 
-% gen_K_with_sum_S(K,S,L):-L is a list with length K and sum of elements in the list S. 
-gen_KS(1, Sum, [Sum], [S | R]).
-gen_KS(K, S, []) :-
-    K #> 0,
-    K1 #= K - 1,
-    between(0, S, H),
-    SH #= S - H,
-    gen_KS(K1, SH, R).

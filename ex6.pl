@@ -58,8 +58,7 @@ nat(X) :- nat(N), X #= N + 1.
 % Пролог не разбира от за всяко, а само от съществуване.
 
 % is_graph([V,E]) : checks if [V, E] represents a graph
-% if (1,2) is edge in the graph, then [1,2] member E
-% and [2,1] is not member
+% if (1,2) is edge in the graph, then [1,2]is member of E  and [2,1] is not member
 % V is sorted
 
 % (forall X member of V)
@@ -69,11 +68,12 @@ nat(X) :- nat(N), X #= N + 1.
 % Слагаме 2 отрицания
 % not not(forall X member of V) (forall Y member of V)
 %if [X, Y] is member of E, then X < Y and [Y,X] is not a member of E
+%(P => Q) is equivalent to (not P or Q)
 
 % Пускаме първото отрицание да потъва
 % Развиваме импликацията
 % not (exists X member of V) (exists Y member of V)
-% not (нот [X, Y] is member of E or (X < Y and [Y,X] is not a member of E))
+% not (not [X, Y] is member of E or (X < Y and [Y,X] is not a member of E))
 
 % По ДеМорган
 % not (exists X member of V) (exists Y member of V)
@@ -97,7 +97,7 @@ member1(X, [H | T]) :- X#\=H, member(X, T).
 % is_sorted_with_append(L) :- append(_, [A, B | _], L), A #>= B.
 
 is_graph1([V, E]) :-
-    not((append(_, [A, B | _], V), A #>=B)),
+    not((append(_, [A, B | _], V), A #>=B)), % in V all are sorted, there is no position which is not in order
     not((member(X,V), member(Y, V),
     member([X,Y], E), not((X #< Y, not(member( [Y,X], E)))))).
 
@@ -108,7 +108,7 @@ is_graph1([V, E]) :-
 % false.
 
 
-%Hamiltonian graph - a connected graph that containt Hamiltonian cycle(a path that visits each vertex exactly once
+%Hamiltonian graph - a connected graph that contains Hamiltonian cycle(a path that visits each vertex exactly once
 % and goes back to the starting vertex)
 
 last1([X], X).
@@ -124,10 +124,10 @@ permutate([H | T], P) :- permutate(T, Q), insert(H, Q, P). % добавяме е
  
 insert(X, L, R) :-  append(P, S, L), append(P, [X | S], R). 
 
-check_path([_,_], [_]).
+check_path([_,_], [_]). % празен път(списък от един елемент, от един връх винаги можем да стигнем до същия връх)
 check_path([V, E], [X, Y | Rest ]) :-
-    check_path([V, E], [Y | Rest]),
-    edge([V, E], [X, Y]). 
+    check_path([V, E], [Y | Rest]), % проверяваме дали имаме път от У до останалите
+    edge([V, E], [X, Y]). % проверяваме в графа дали имаме ребро от Х до У
 
 
 % идеята е да генерираме произволна пермутация на върховете  и да вземем първия връх,
@@ -148,10 +148,10 @@ is_hamiltonian([V, E]) :-
 % for verticies we have [1,2... N] for some positive N.
 
 gen_nat_graph([V, E]) :-
-    nat(N), N #> 0,
-    range(1, N, V),
-    gen_all_edges(V, All),
-    subset(E, All).
+    nat(N), N #> 0, % give me a positive number 
+    range(1, N, V), % produce verticies from 1 to N
+    gen_all_edges(V, All), % generira vsichki rebre ot mn-vo ot vyrhove
+    subset(E, All). % mn-voto ot rebra e subset na all
 
 
 % range(A, B, L) :- L is a [A, A+1...B].
@@ -159,8 +159,8 @@ range(A, B, []) :- A #> B.
 range(A, B, [A | R]) :- A #=< B, A1 #= A + 1, range(A1, B, R). 
 
 subset([], []).
-subset(S , [_ | T]) :- subset(S, T).
-subset([H|S], [H | T]) :- subset(S, T).
+subset(S , [_ | T]) :- subset(S, T). %  izbirame da ne dobavim glavata kym podmn-voto
+subset([H|S], [H | T]) :- subset(S, T). % izbirame da q dobavim
 
 % Как да генерираме списъка на всевъзможните ребра
 % [1, 2, 3, 4] ->
@@ -171,12 +171,12 @@ subset([H|S], [H | T]) :- subset(S, T).
 % appendAll -> [ [1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4] ]
 
 % gen_all_edges_for_vertex цели да направи 1: [1, 2], [1, 3], [1, 4]
-gen_all_edges_for_vertex([_], []).
+gen_all_edges_for_vertex([_], []). % при единствен връх връщаме празния списък
 gen_all_edges_for_vertex([H | T], L ) :-
     T #\= [], 
     insert_first_to_all(H, T, L).
 
-insert_first_to_all(_, [], []).
+insert_first_to_all(_, [], []).% добавяме елемент към празен списък 
 insert_first_to_all(X, [H | T],  [ [X, H] | R]):-
     insert_first_to_all(X, T, R).
 

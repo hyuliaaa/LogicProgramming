@@ -63,7 +63,7 @@ is_connected([V, E]):-
 
 
 is_acyclic([V, E]):-
-    not((
+    not(( 
         member(S, V),
         member(F, V),
         path_imp([V,E], S, F, P1),

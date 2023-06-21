@@ -15,11 +15,11 @@ nat(N) :- nat(K), N#=K+1.
 % ideqta e po nqkakyv nachin da namerim sumata i da ogranichim dvete otgore
 
 gen_pair_of_nats(X, Y) :- nat(Sum), %  give me some natural number S called Sum 
-                          between(0, Sum, X), % generate number between 0 to sum called X
+                          between(0, Sum, X), % generate number between 0 to Sum called X
                           Y #=Sum-X.  
 
-between(A, B, A):-A#=<B.
-between(A, B,  R) :- A#<B, A1#=A+1, between(A1, B, R).
+
+
 
 
 % генерирайте всички елементи на N^k

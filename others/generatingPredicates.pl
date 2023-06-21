@@ -35,7 +35,7 @@ gen_Nat_K(K, T) :-
 
 % генерирайте обединението на N^K -> N U N x N U N x N x N U ...
 gen_union_Nat_K(T) :-
-    gen_pair_of_nats(K, S),
+    gen_pair_of_nats(K, S), 
     K #> 0,
     gen_KS(K, S, T).
 

@@ -112,4 +112,4 @@ gen_in_circle_00(R, A, B) :-
 gen_in_circle([XC, YC], R, [X, Y]):-
     gen_in_circle_00(R, A, B),
     X #= A + XC,
-    Y #= B + YC.
+    Y #= B + YC.    

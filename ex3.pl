@@ -65,17 +65,13 @@ permutate([H | T], P) :- permutate(T, Q), insert(H, Q, P).
 
 insert(X, L, R):- my_append(P, S, L), my_append(P, [X | S], R).
 
-
 % quick_sort :- we devide a list in two of chosen element, we recursively sort each half, and add in the middle the element that we have chosen.
-
 quick_sort([], []).
 quick_sort([H | T], Sorted ):-
     split(T, H, Less, Bigger),
     quick_sort(Less, Sorted_Less),
     quick_sort(Bigger, Sorted_Bigger),
     my_append(Sorted_Less,  [H|Sorted_Bigger], Sorted). 
-
-
 
 %split(List, pivot, bigger, less).
 %add(H, L, Less, Bigger) -: it will determine to which to add H Less or Biggger
@@ -84,7 +80,6 @@ split([H | T], X, Less, Bigger ) :-split(T, X, L, B), add(H, X, L, B, Less, Bigg
 
 add(E, X, L, B, [E|L], B):- order(E, X). % if E < X, add to Less
 add(E, X, L, B, L, [E|B]) :-not(order(E,X)).
-
 
 %char_vects(K, VS) :- VS is a list of all characteristics vectors(Vectors with 0/1) with lenght K 
 char_vects(0, [[]]).
@@ -97,7 +92,6 @@ char_vects(K, VS) :- K#>0, N#=K-1,
 % poluchavash element i spisyk ot spisaci i kym vseki spicyk dobavash tozi element
 insert_first(_, [], []).
 insert_first(X, [L | LS], [ [X | L ] |RS ]) :- insert_first(X, LS, RS).
-
 
 %between(X, A, B) :- checks/generates X(integer) is between A and B.
 between(A, A, B) :- A #=<B.
@@ -125,7 +119,7 @@ list_of_K_elements_between_A_B( [H | T], K, A, B) :- K#>0,
 % da postroim spisyk s dyljina k s elementi ot nqkakyv spisyk
 %variations_with_repetiotions(V, K, L) -: V is list with length K and each element is element of L.
 variations_with_repetitions([], 0, _).
-variations_with_repetitions([H|T] , K, L) :-
+variations_with_repetitions([H|T], K, L) :-
     K#>0,
     N#= K-1,
     member(H, L),

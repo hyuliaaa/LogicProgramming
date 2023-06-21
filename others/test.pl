@@ -245,30 +245,3 @@ gen_arr_prog([_]).
 gen_arr_prog(P) :-
     nat(N),
     gen_KS(3, N, [L, A0, D]).
-
-
-%Hamiltonian Graph
-last_in_list(L, X) :- append(_, [X], L).
-
-% граф от върхове[V,E] и ребра и имам връх[X,Y] и искаме да проверим, че имаме ребро в графа
-
-edge([_, E], [X, Y]) :- X #< Y, member([X, Y], E).
-edge([_, E], [X, Y]) :- Y #< X, member([Y, X], E).
-
-permutateList([], []).
-permutateList([H | T], P):- permutateList(T, Q), insert(H, Q, P).
-
-check_path([_, _], [_]).
-check_path([V, E], [X, Y | Rest]) :-
-    check_path([V, E], [Y | Rest]),
-    edge([V, E], [X, Y]).
-
-
-% идеята е да генерираме произволна пермутация на върховете  и да вземем първия връх,
-% след това да проверим дали имаме път в графа, да вземем последния елемент и да проверим
-% дали има ребро от последния към първия.     
-is_hamiltonian([V, E]) :-
-    permutate(V, [Start | Rest]),
-    check_path([V, E], [Start | Rest]),
-    last_in_list([Start | Rest], End),
-    edge([V, E], [End, Start]).
