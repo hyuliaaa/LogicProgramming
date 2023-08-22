@@ -122,8 +122,20 @@ get_4_tuples_nats(A, B, C, D) :-
 % (A, B) : A^2 + B^2 <=R2 [we check if a point is in a circle with center (0,0)]
 
 example_labeling(X) :-
-    X ins 1..3,
+    X in 1..3,
     label([X]).
 
 
 perm(N, P) :- length(P, N), P ins 1..N, all_distinct(P), label(P).
+
+
+% специфичен(X) :- 
+%     дължина(X, 3*N), 
+%     forall( 
+%                 ( K in 1..N, label([K]) ),
+% 	            ( nth(X, K, Ak),
+% 	            nth(X, 3*K, A3k),
+% 	            (  1 #=< Ak+6, Ak+6 #=< 3*N, 1 #=< Ak, Ak #=< K
+% 	            -> nth(X, Ak+6, A3k); 
+%              A3k #= 3*A3nk+1, nth(X, 3*N-K, A3nk) ) )
+%          ).

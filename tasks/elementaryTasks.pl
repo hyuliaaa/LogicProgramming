@@ -5,6 +5,12 @@
 list([]).
 list([_|T]) :-list(T).
 
+
+flatten([], []).
+flatten(X, [X]):- not(list(X)).
+flatten([H|T], R):- flatten(H, FH), flatten(T, FT), 
+	append(FH, FT, R).
+
 % check wheter X is element of L
 member3(X, [X | _]).
 member3(X, [Y | T]) :-member3(X, T).
@@ -65,9 +71,9 @@ permutate(P , [H | T]) :- permutate(Q, T), insert(H, Q, P).
 %subsequence(S, L) - S is a subsequence of L, the order should be the same
 %exampple : subsequence([b,d], [a,b,c,d,e]). - in even places
 %subsequence([a,c,e], [a,b,c,d,e]).
-subsequence([], []).
-subsequence(S, [_ | T]) :- subsequence(S , T).
-subsequence([H | S], [H | T]) :- subsequence(S, T).
+    subsequence([], []).
+    subsequence(S, [_ | T]) :- subsequence(S , T).
+    subsequence([H | S], [H | T]) :- subsequence(S, T).
 
 
 % power_set(P,S) - P is the power set of S (S has no repetitions)

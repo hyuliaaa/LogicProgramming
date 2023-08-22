@@ -64,6 +64,11 @@ set_minus([X | S], M, [X | R]) :-
 % conditional_add(X, A, B, A) :- member(X, B).
 % conditional_add(X, A, B, [X | A]) :- not(member(X, B)).
 
+
+divide([], []).
+divide(L, [H|R]):- append(H, T, L), H \= [], divide(T, R).
+
+
 subsequence([], []).
 subsequence(S, [_ | T]) :-
     subsequence(S, T).
