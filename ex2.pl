@@ -71,7 +71,7 @@ subsequence(S, [_ | T]) :- subsequence(S , T).
 subsequence([H | S], [H | T]) :- subsequence(S, T).
 
 % power_set(P,S) - P is the power set of S (S has no repetitions)
-power_set([[], []]). %stepenneto mn-vo na [], [[]].
+power_set([[]], []). %stepenneto mn-vo na [], [[]].
 power_set(P, [A | S]) :-
     power_set(B, S), % we follow the def so we gen the P(S) to be B
     prepend_to_all(A, B, C), % then we prepend A to B

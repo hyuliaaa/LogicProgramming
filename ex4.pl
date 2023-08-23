@@ -45,7 +45,6 @@ gen_union_Nat_K(T) :-
     gen_KS(K, Sum, T).
 
 % генерирайте двойките цели числа Z^2
-
 gen_pair_of_ints(A, B) :-
     gen_pair_of_nats(N, K), % N ни казва N-тото цяло число, К-тото цяло число
     int(N, A),

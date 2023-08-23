@@ -58,7 +58,7 @@ nat(X) :- nat(N), X #= N + 1.
 % Пролог не разбира от за всяко, а само от съществуване.
 
 % is_graph([V,E]) : checks if [V, E] represents a graph
-% if (1,2) is edge in the graph, then [1,2]is member of E  and [2,1] is not member
+% if (1,2) is edge in the graph, then [1,2] is member of E and [2,1] is not member
 % V is sorted
 
 % (forall X member of V)
@@ -66,8 +66,8 @@ nat(X) :- nat(N), X #= N + 1.
 %if [X, Y] is member of E, then X < Y and [Y,X] is not a member of E
 
 % Слагаме 2 отрицания
-% not not(forall X member of V) (forall Y member of V)
-%if [X, Y] is member of E, then X < Y and [Y,X] is not a member of E
+% not not((forall X member of V) (forall Y member of V)
+%if [X, Y] is member of E, then X < Y and [Y,X] is not a member of E)
 %(P => Q) is equivalent to (not P or Q)
 
 % Пускаме първото отрицание да потъва

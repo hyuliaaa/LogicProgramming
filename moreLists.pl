@@ -199,9 +199,28 @@ has_divisor(N, D) :-
     D2 is D + 2, % skip even numbers
     has_divisor(N, D2).
 
+% min(M, A, B) :- M is the minumum of A and B
+min(A, A, B) :- A #=< B.
+min(B, A, B) :- A #> B.
 
-gcd(0, B, B).
-gcd(A, B, D) :-
-    A > 0,
-    R #= B mod A,
-    gcd(R, A, D).
+
+minEl([M], M).
+minEl([H | T], M) :- minEl(T, CurrMin), min(M,H, CurrMin).
+
+listLen([], 0).
+listLen([H | T], N) :-listLen(T, K), N #= K + 1.
+
+
+% element_at(X, L, N) :- whether X is in position N of list L
+element_at(X, [X |_], 1).
+element_at(X, [H | T], N) :- N #> 0, NN #= N - 1, element_at(X, T, NN).
+
+%is_sorted(L) -: checks whether L is sorted
+is_sorted([]).
+is_sorted([_]).
+is_sorted([X, Y | T]) :- X #=< Y, is_sorted([Y | T]).
+
+% bogo_sort (L) :- generates permutations untill it finds one that is sorted
+
+permutate([], []).
+permutate([H | T], Result) :- permutate(T, Temp), insert(H, Temp, Result).

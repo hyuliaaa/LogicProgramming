@@ -31,5 +31,5 @@ int(N, N) :- N #> 0.
 int(N, Z) :- N #> 0, Z #= -N. 
 
 
-forall(member(A, [2,4,6,-7]), A #> 0).
+
 

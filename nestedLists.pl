@@ -63,3 +63,12 @@ odd_position(X, [H, Y | T]) :- odd_position(X, T).
 even_position(X, [X|_]).
 even_position(X, [_ | T]) :- odd_position(X, T).
 
+
+% works for nested lists also
+k_th_element(X, [X| _], 1).
+k_th_element(R, [_ | T], K) :-
+    K > 1,
+    K1 #= K - 1,
+    k_th_element(R, T, K1).
+
+

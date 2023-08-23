@@ -61,8 +61,8 @@ between_with_range(X, A, B) :-range(R, A, B), member(X, R).
 list_of_K_elements_between_A_B([], 0, _, _).
 list_of_K_elements_between_A_B([H|T], K, A, B) :- K #>= 0,
                                                   between(H, A, B),
-                                                  N #= K - 1,
-                                                  list_of_K_elements_between_A_B(T, N, A, B).
+                                                  K1 #= K - 1,
+                                                  list_of_K_elements_between_A_B(T, K1, A, B).
 
 
 % da postroim spisyk s dyljina k s elementi ot nqkakyv spisyk
@@ -80,6 +80,7 @@ list_of_K_elements_between_A_and_B_with_range(L, K, A, B) :- range(R, A, B), var
 gen_KS(1, S, [S]) :- S#>=0.
 gen_KS(K, S, [H | T]) :- K>=1, 
                     N #= K - 1,
+                    between(H, O, S),
                     M #= S - H,
                     between(H, O, S),
                     gen_KS(N,M,T).

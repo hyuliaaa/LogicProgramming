@@ -28,3 +28,25 @@ condition(X, Y):- condition1(X, Y); condition2(X, Y). % [] удовлетвор�
 isLaminar(L) :- forall((member(X, L), member(Y, L)), condition(X, Y)).
 
 % isLaminar(L):- not(( member(X, L), member(Y, L), not(condition(X, Y)))).
+
+
+:-use_module(library(clpfd)).
+
+size([], L) :- L #= 0.
+size([_|T], L) :- L#>=0, size(T, L - 1).
+
+nat(N):- N #= 0; nat(N - 1).
+
+s(M) :- nat(N), K #=< N, size(M, 3*K), M ins 0..N, label(M), isSpecific(M).
+
+findAtIndex(I, [X|_], X):- I #= 1.
+findAtIndex(I, [_|T], X):- I #> 1, findAtIndex(I - 1, T, X).
+
+isSpecific(X) :- size(X, 3*N), K in 1..N, label([K]), 
+findAtIndex(K, X, AK), AK + 6 #=< 3*N, 1 #=< AK + 6, AK #=< K, 1 #=< AK, 
+findAtIndex(3*K, X, A3K), 
+findAtIndex(AK+6, X, AAk6), A3K #= AAk6.
+
+isSpecific(X) :- size(X, 3*N), K in 1..N, label([K]), 
+findAtIndex(K, X, AK), not((AK + 6 #=< 3*N, 1 #=< AK + 6, AK #=< K, 1 #=< AK)), 
+findAtIndex(3*K, X, A3K), findAtIndex(3*N - K, X, A3NK), A3K #= 3*A3NK + 1.

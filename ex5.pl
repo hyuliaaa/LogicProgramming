@@ -203,5 +203,5 @@ is_element_closed(E, M, L) :-
         C #= E * X,
         member(A, L),
         member(B, L),
-        member(C, L).
+        member(C, L). 
     

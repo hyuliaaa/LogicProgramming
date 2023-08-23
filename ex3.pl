@@ -13,6 +13,7 @@ partition([[H]| P], [H | T]) :- partition(P, T).
 %partition([[H | HP] | TP], H|T) :-partition([HP|TP], T).
 
 
+
 %Arithmetics
 
 % X = 5-1.
@@ -117,7 +118,7 @@ list_of_K_elements_between_A_B( [H | T], K, A, B) :- K#>0,
                                                 list_of_K_elements_between_A_B(T, N, A, B).
 
 % da postroim spisyk s dyljina k s elementi ot nqkakyv spisyk
-%variations_with_repetiotions(V, K, L) -: V is list with length K and each element is element of L.
+%variations_wit[h_repetiotions(V, K, L) -: V is list with length K and each element is element of L.
 variations_with_repetitions([], 0, _).
 variations_with_repetitions([H|T], K, L) :-
     K#>0,
