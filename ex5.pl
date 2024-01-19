@@ -98,7 +98,7 @@ gen_arr_prog_Z(P) :-
 
 % По дадено число А, генерираме списъци [X,Y] [Z, U], които кодират рационално число.
 % q(A, [X, Y], [Z,U]) -> given a natural number A
-% generate [X, Y] [Z, U] -> which represent a rational numbers
+% generate [X, Y] [Z, U] -> which represent a rational number
 % such that Y > X > 0, Z > U > 0
 % and (X/Y) * (Z/U) = 2
 % X + Z < A

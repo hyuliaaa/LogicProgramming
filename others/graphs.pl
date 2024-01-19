@@ -1,4 +1,5 @@
 
+
 :- use_module(library(clpfd)).
 last1([X], X).
 last1([_ | T], X) :- last1(T, X).

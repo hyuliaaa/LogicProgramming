@@ -135,3 +135,6 @@ subset([H | T], S) :- subset(T, S).
 % т.е. X става списък от всички A, за които P е вярно.
 ?- findall(A,(member(A,[1,3,4,2,9,22]), A #= 2*K), X).
 X = [4, 2, 22].
+
+% findall(P, (P in 0..1000, label([P]), просто(P)), X).
+% (P in 0..10, label([P])).

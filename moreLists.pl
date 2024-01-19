@@ -134,7 +134,7 @@ dupli([X|Xs],[X,X|Ys]) :- dupli(Xs,Ys).
 % ?- dupli([a,b,c],3,X).
 % X = [a,a,a,b,b,b,c,c,c]
 
-% dupli([], 0, []).
+% dupli([], _, []).
 % dupli([H | T], N, Result) :- cycle(N, H, CurrList),
 %                                      dupli(T, N, R),
 %                                      append(CurrList, R, Result).
@@ -192,12 +192,21 @@ is_prime(N) :-N > 3,
               N mod 2 =\= 0, 
               not(has_divisor(N,3)).  
 
-
+            
 has_divisor(N, D) :- N mod D =:= 0.
 has_divisor(N, D) :-
     D * D < N, % we need to check u[ to square root of n]
     D2 is D + 2, % skip even numbers
     has_divisor(N, D2).
+
+% findall(A, P, X) е приблизително същото като X = {A: P}
+% т.е. X става списък от всички A, за които P е вярно.
+?- findall(A,(member(A,[1,3,4,2,9,22]), A #= 2*K), X).
+X = [4, 2, 22].
+
+c
+
+
 
 % min(M, A, B) :- M is the minumum of A and B
 min(A, A, B) :- A #=< B.
