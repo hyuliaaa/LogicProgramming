@@ -177,6 +177,7 @@ primes_between(A, B, [A |R ]) :-
     A #=< B,
     A1 #= A + 1,
     primes_between(A1, B, R).
+
 primes_between(A, B,R ) :- 
     not(is_prime(A)), 
     A1 #= A + 1, 
@@ -202,7 +203,7 @@ isTree(t(_, L, R)) :- isTree(L), isTree(R).
 % [[], Value, []] -> Leaf (tree with height 0) 
 
 
-% parametrization: height, min vertex, max vertex, count of vertecies
+% parametrization: height, max vertex, count of vertecies
 
 
 gen_bin_tree(Tree) :-
