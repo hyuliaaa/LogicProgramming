@@ -204,7 +204,7 @@ has_divisor(N, D) :-
 ?- findall(A,(member(A,[1,3,4,2,9,22]), A #= 2*K), X).
 X = [4, 2, 22].
 
-c
+findall(A,(A ins 1..10, label([A]), is_prime(A)), X).
 
 
 

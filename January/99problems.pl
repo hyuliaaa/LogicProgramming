@@ -16,7 +16,7 @@ reverse([H | T], R) :- reverse(T, Temp), append(Temp, [H], R).
 
 %Eliminate consecutive duplicates of list elements.
 ?- compress([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
-X = [a,b,c,a,d,e]
+% X = [a,b,c,a,d,e]
 
 compress([], []).
 compress([X], [X]).
@@ -148,11 +148,11 @@ combination(K, L, [X | C]) :-
 
 
  % Determine whether a given integer number is prime
-% is_prime(2).
-% is_prime(3).
-% is_prime(N) :- N > 3,
-%                N mod 2 =\= 0,
-%                not(has_divisor(N, 3)). 
+is_prime(2).
+is_prime(3).
+is_prime(N) :- N > 3,
+               N mod 2 =\= 0,
+               not(has_divisor(N, 3)). 
 
 
 has_divisor(N, D) :- N mod D =:= 0.
@@ -177,7 +177,102 @@ primes_between(A, B, [A |R ]) :-
     A #=< B,
     A1 #= A + 1,
     primes_between(A1, B, R).
-primes_between(A, B,R ) :- not(is_prime(A)), A1 #= A + 1, primes_between(A1, B, R).
+primes_between(A, B,R ) :- 
+    not(is_prime(A)), 
+    A1 #= A + 1, 
+    primes_between(A1, B, R).
 
     
+
+isTree(nil).
+isTree(t(_, L, R)) :- isTree(L), isTree(R).
+
+ % ====== Another representation =====
+
+% Ще генерираме двоични дървета с върхове ест. числа -> генераторът ще е безкраен
+% по някакъв начин трябва да си параметризираме дърветата:
+%  - генерираме ест. число
+%  - сплитваме по някакъв начин, за да получим параметри и на база на параметрите да генерираме краен брой дървета
+ 
+
+%  Ако генерираме височина, граница отгоре и граница отдолу, получаваме краен брой дървета
+% [] -> empty tree or tree with height -1
+% [Left, Root, Right] -> bin tree with root Root, left subtree Left and right subtree Right
+% [Left, Root, Right] -> height is the max(height of Left, height of Right) + 1
+% [[], Value, []] -> Leaf (tree with height 0) 
+
+
+% parametrization: height, min vertex, max vertex, count of vertecies
+
+
+gen_bin_tree(Tree) :-
+    gen_nat_triple(Height, Max, K),
+    gen_bin_tree(Height, Max, K, Tree).
+
+gen_nat_triple(A, B, C) :-
+    nat(N),
+    gen_KS(3, N, [A, B, C]).
+
+nat(0).
+nat(N) :- N #= K + 1.
+
+gen_KS(1, S, [S]).
+gen_KS(K, S, [H | T]) :- K #> 1,
+        K1 #= K - 1,
+        between(0, S, H),
+        SH #= S - H,
+        gen_KS(K1, SH, T).
+
+% gen_bin_tree(Height, Max, K, Tree) ->
+% Tree is bin tree with K vertecies, height is Height,
+% vertex with max value for vertex Max or
+% Max is a vertex of Tree
+
+% if whe choose K from 0 to Max (we repeat set (list) of vertecies)
+% [2, 4, 8] -> choose 3 from 0 to 10 (Max = 10) (<3, 10> =\= <3, 120>)
+% [2, 4, 8] -> choose 3 from 0 to 120 (Max = 120)
+% [2, 3 , 8] -> choose 3 from 0 to 2135 (Max = 2135)
+
+gen_bin_tree(Height, Max, K, Tree) :-
+    Max1 #= Max - 1,
+    K1 #= K - 1,
+    choose_KN(K1, Max1, S),
+    permutate([Max | S], V), % generate all permutations
+    gen_bin_tree_with_vertecies(Height, V, Tree). 
+
+
+gen_bin_tree_with_vertecies(Height, V, Tree) :-
+    gen_bin_tree_with_vertecies_helper(Height, V, Tree, []).
+
+
+gen_bin_tree_with_vertecies_helper(-1, V, [], V).
+gen_bin_tree_with_vertecies_helper(H, [U | US], Tree, Rest) :-
+    H #> 0,
+    H1 #= H - 1,
+    between(-1, H1, HeightOfLeft),
+    between(-1, H1, HeightOfRight),
+    check_heights(HeightOfLeft, HeightOfRight, H1),
+    gen_bin_tree_with_vertecies_helper(HeightOfLeft, US, LeftTree,  ForRight),
+    gen_bin_tree_with_vertecies_helper(HeightOfRight, ForRight, RightTree, Rest),
+    Tree = [LeftTree, U, RightTree].
+
+choose_KN(K, N, S) :- choose_from(K, 0, N, S). % choose K elements from 0 to N and return them in list S.
+
+choose_from(0, _, _, []).
+choose_from(K, B, E, [H | T]) :-
+    K #> 0,
+    K1 #= K - 1,
+    between(B, E, H),
+    H1 #= H + 1,
+    choose_from(K1, H1, E, T).
+
+permutate([], []).
+permutate([H | T], P) :- permutate(T, Q), insert(H, Q, P).
+
+insert(H, Q, L) :- append(P, S, Q), append(P, [H | S], L).
+
+check_heights(H, _, H).
+check_heights(L, H, H) :- L < H.
+
+
 

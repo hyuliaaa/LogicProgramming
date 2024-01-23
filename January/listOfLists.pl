@@ -85,3 +85,4 @@ sum_list([H | T], F) :-
 flatten([], []).
 flatten([H | T], R) :- flatten(T, Temp), append(H, Temp, R).
  
+

@@ -193,6 +193,4 @@ gen_all_edges([V | VS], All):-
 % искаме да генерираме всички графи с ест. числа, които са хамилтонови с точност до изоморфизъм
 get_nat_ham_graph(G) :-
     gen_nat_graph(G),
-    is_hamiltonian(G).3
-
-
+    is_hamiltonian(G).

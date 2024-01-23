@@ -84,7 +84,7 @@ add(E, X, L, B, L, [E|B]) :-not(order(E,X)).
 
 %char_vects(K, VS) :- VS is a list of all characteristics vectors(Vectors with 0/1) with lenght K 
 char_vects(0, [[]]).
-char_vects(K, VS) :- K#>0, N#=K-1,
+char_vects(K, VS) :-K#>0, N#=K-1,
                     char_vects(N, TS),
                     insert_first(0, TS, Zeros),
                     insert_first(1,TS, Ones),
